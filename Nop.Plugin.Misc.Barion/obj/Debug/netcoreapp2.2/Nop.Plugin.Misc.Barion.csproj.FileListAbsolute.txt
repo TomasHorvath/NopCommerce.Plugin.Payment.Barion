@@ -1,0 +1,12 @@
+C:\tfs\nopcommerce_4_20\src\Plugins\Nop.Plugin.Misc.Barion\bin\Debug\netcoreapp2.2\Nop.Plugin.Misc.Barion.deps.json
+C:\tfs\nopcommerce_4_20\src\Plugins\Nop.Plugin.Misc.Barion\bin\Debug\netcoreapp2.2\Nop.Plugin.Misc.Barion.dll
+C:\tfs\nopcommerce_4_20\src\Plugins\Nop.Plugin.Misc.Barion\bin\Debug\netcoreapp2.2\Nop.Plugin.Misc.Barion.pdb
+C:\tfs\nopcommerce_4_20\src\Plugins\Nop.Plugin.Misc.Barion\bin\Debug\netcoreapp2.2\Nop.Core.dll
+C:\tfs\nopcommerce_4_20\src\Plugins\Nop.Plugin.Misc.Barion\bin\Debug\netcoreapp2.2\Nop.Core.pdb
+C:\tfs\nopcommerce_4_20\src\Plugins\Nop.Plugin.Misc.Barion\obj\Debug\netcoreapp2.2\Nop.Plugin.Misc.Barion.csprojAssemblyReference.cache
+C:\tfs\nopcommerce_4_20\src\Plugins\Nop.Plugin.Misc.Barion\obj\Debug\netcoreapp2.2\Nop.Plugin.Misc.Barion.csproj.CoreCompileInputs.cache
+C:\tfs\nopcommerce_4_20\src\Plugins\Nop.Plugin.Misc.Barion\obj\Debug\netcoreapp2.2\Nop.Plugin.Misc.Barion.AssemblyInfoInputs.cache
+C:\tfs\nopcommerce_4_20\src\Plugins\Nop.Plugin.Misc.Barion\obj\Debug\netcoreapp2.2\Nop.Plugin.Misc.Barion.AssemblyInfo.cs
+C:\tfs\nopcommerce_4_20\src\Plugins\Nop.Plugin.Misc.Barion\obj\Debug\netcoreapp2.2\Nop.Plugin.Misc.Barion.csproj.CopyComplete
+C:\tfs\nopcommerce_4_20\src\Plugins\Nop.Plugin.Misc.Barion\obj\Debug\netcoreapp2.2\Nop.Plugin.Misc.Barion.dll
+C:\tfs\nopcommerce_4_20\src\Plugins\Nop.Plugin.Misc.Barion\obj\Debug\netcoreapp2.2\Nop.Plugin.Misc.Barion.pdb
