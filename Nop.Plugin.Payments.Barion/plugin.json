@@ -1,0 +1,11 @@
+﻿{
+  "Group": "Payment methods",
+  "FriendlyName": "Barion",
+  "SystemName": "Payments.Barion",
+  "Version": "1.16",
+  "SupportedVersions": [ "4.20" ],
+  "Author": "Tomáš Horváth",
+  "DisplayOrder": 1,
+  "FileName": "Nop.Plugin.Payments.Barion.dll",
+  "Description": "This plugin allows paying with Barion payment gateway"
+}

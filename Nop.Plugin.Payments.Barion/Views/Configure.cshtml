@@ -1,0 +1,162 @@
+﻿@model Nop.Plugin.Payments.Barion.Models.ConfigurationModel;
+
+@{
+    Layout = "_ConfigurePlugin";
+}
+
+@await Component.InvokeAsync("StoreScopeConfiguration")
+
+<form asp-controller="Barion" asp-action="Configure" method="post">
+    <div class="panel-group">
+        <div class="panel panel-default">
+            <div class="panel-body">
+               <img alt="Barion Payment Plugin" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMgAAABPCAYAAACu7Yr+AAAABmJLR0QAZABkAGSQ8KxPAAAACXBIWXMAAC4jAAAuIwF4pT92AAAAB3RJTUUH4wcTEhE5v/Y76wAAABl0RVh0Q29tbWVudABDcmVhdGVkIHdpdGggR0lNUFeBDhcAAA5ySURBVHja7Z15dB3Vfcc/d+bNvE1v0S7ZktBiYwPGMQbjBRuIgWCasIcWkvaUkzanhOISQug5IQ3JyVYa2tPSJBwT0jSFBNpCYsctlCZsBkPYvGGMDbYxwsiStTxJ7+ntM3P7h2TXxponW36S7af7+eudM/Nmufd+7/39fvd37wge3ClRKBSjoqkiUCiUQBQKJRCFQglEoVACUSiUQBQKJRCFQglEoVACUSiUQBQKhRKIQqEEolAogSgUSiAKhRKIQqEEolAogSgUpYJnom9w53Qfld7RdThkSf7uwzS2qgfFVBXILYuqmVHpHfXY/qTFDx/9gIRa9HsYhoAv1nqZW+XF0AQ7Yjn+bV+GbkcVVMkJRHFsXFGmc98na5ld50cXAgAp4baBLH+7rptV3VlVSMoHmZqYAv7x0jrOqg8cFAeAENBU7uW7l9VzgV9VmRLIFGV52OD0Gr/r8cqgh6sbA6qglECmJmlbIsdwM3K28kOUDzJFeWnI4o32BAubQ6Me/7A/y8/bU8d1j0uCOp9p8DOnzk9TuUmZ30PI1NCFIG05DGZseuM5dvZmeW5viod7c1hSCURxEuAAX3i+m/uX2CxuCRM0hwf4rCXZui/Jt9b3smscrTUk4PYmP9edFWV2rR+/MbrhEDA1KgMeWiu8nN8c4sb5km8N5nh2Z5wfb0/wZtaZcnUiJnpnxZ3XNxYM885UYd5RWerXWVBuoAnYHrf4n4TFeIrpS7VeVi6sZFZtAE2M/3n6khZPbIlxzztxuqeQTtQIcpKyPm2zPj3+KVRDwKMLyrnq7ApMXRz381QGPfzFkhqWtZRx1/PdPDVkKSddcWoyx9D4/Yo6PjuvsijiOJQz6wM8ck0Df1XvVSPIZODXBNdGDRbXeZkWNinzaZi6IGtJ4mmbd3qzPNOZ4YVUcRJSDAFXRwwW1niZUW5SEfRQ7tPwjNgfeVsykHUYyNjEhiy2xXJs6s+xLmUflbNqCLgk6GFuucEZ5QbRgIcyn07E1AgY2oiZI5BSkrEku/tz3PhGjAOT5PfNCBL166QtScKSxHM2yYxDb9ZhW9pm6xh+wHxT45EVdZxZV7xwcNaSxFJ5Ogdy7Evk6UtaVHt1BByT2acBSwM650SHy6amzCDk04n6NAIejQNTPwfqoD9tsW8wz6aeLE/G8uw7ARG8EyqQiFdn8w2NVJcZBxvox7kWuCPvsLUjyb9sHuChcc4kXxjQ+dIZIZa0hqgPmxjH0LNmLIf+lMWe3gwvfZDk799P0usc2mMLbmoKsPS0IDNrfFQEDLyeo7t+xo5zaAbJ9WdHaak+ci7EciTxjE39o+3kXFJOpuuCnyyvOW5xSAl9KYt3OlO8ujfJC50Znkna5MfRPhd4Na5v9LOoMUBbtZ/KoMc1SOAavJDQn7J4qyPJL7cN8rOeHHIqCMTnEdSHzTHPCxgaC5tDnNNYxlXbB/izV2NHnZc0TRfcNy/ClXPKCXn1cT6nRn3YpD5ssrglzJaBD3msN3fw+D8treKSmZHx+RrtyaOrKE0QMDQKye7+86Kc21Q2tgBg1OtkLIctHyV56r0ED+1N01mEHvuhT9XxifrjE6wmhn2gT54eYemMMDfuHGTly33smIT48ynlpJu64DNzyvnfqMk1v+2ifYwCWubXWXVZbVHNjdEcN59nfK5cOu/wWHu6KM90a62XK+dUjHnerp4MT2zt57alNZSZwx1GPGvz3LuD/GjrIM8m3U1Zj4CrowYLq0xaoyYVAQ+mqfFeT4YvbB4c9T/eIvtAhia4dFaU/ygzuOrpLton2Ow6oQJxJLTHMuzpzbBvyCLvQI1fZ1adn9ZKn2tYcl5DkF9eXM3lz3aTdCmfJT6NX3x6Gk0V7s7kYMZm274ku2I5MnmHsE9ndpWP2fX+cTd6NxMtNmQxkLXxCIj4dMIBD7t60mzJHX/MVAArF1UVdMgtR/LrLTFu3zBAlyM5v2GIhc0hfrdjgHs3D/Baxv057p0R5PLTwzRX+Qh79SPqZUFTGS/sTfNwX+6Yn30oa7N/xK+xLQfdo1EXNpgWMV3NboC504N8f16Ez28YKF2B9KYszlvdQexj5lJIwD0zy7h1SQ0Bc/SGuqQlzHdnpbhjx9ARxyo0eGB5ras4pIQXd8f561d6eX2UhvHipTUsaw0X5R0tR3Lnkx082J3lQGfnE7DIpxM0RFFs6btP8zOrQA6X5UgeeLmbL29PHLzfDzf08w8b+nkqMXa49o2eLDefZxD16a4j+y3zy3n4d/uP6bkTOYdrn/iQ55L2YeXgE3BTpckdi6o4e5r76P+p2REqNg0e0X4m0lqYVCSQHyX5KCHhrveG+Of1+3F7dyHgxnkVzBzFGf727BCfaAi63veVPXGufL57VHEcEFAx37Ev63CoJZCR8ELa5sm4VZQKvGFOFCHc7796S4zbDxEHwJqEdVTiAPjVoMXdz3aRzLmbX+c0BrkidGz9rZTQmXOO6CQyEv61N8c1T3eyd8A9KFMRMLihypjQNnpSz4N8c3eSrR3uTmxd2OSW1sOF0OYRXDe33PU/8YzN11/pK5nZ+wsCOmcU8LF29aS5rQhmyM96cjy+OVYwkHHTjGBR3+19S7KhQBBDEzAtNIUFkpPwmx2DBc+5sPXwqM2fNvkLRsZebx9i3XHOqZxM2vqj5oCr7+FI+PmGWNFWIn5na5yuRN71+PyGYNHfL5axx3Tap6xAAB78MF0wxbu1yseh7eOi5sJhznUfJI/7mcRJVD5z69x9j47BLKs+yhSvR7cl63fFXY83lns5zShu6ZzozuikF0inJdlfoNcKeXUWB/WDDbet2ud6bt6RvFRiS1brIu6j5bZ9qaI7sKvfT7o22qBX4+JQaaX3nfQCkUAq4+5M6prgrMCwQM7yakT9noL+x+5c6aSiBjRBhd998vO9nuJ3Bk/EciRdylAXgpoyJZBJZyjvFHTUKkbmLM706ZgFUjzyllNSO4NU6aDp7lW4I1H8jNu8hP60+3WjXk0JZLIpZNU6EpIjPkqVIQo6bdJhXPlEJys6wjW8e8CknJBRvcBlNSGUQCabMtP9MW0peX9kPmOs5iAE6CVUf4OOxCkgguaAPiENJlhglBjKOUogkz16BHzudq1lS15LDg/5XXmnYMRL92hUaaWjkH5bksq6h0HbKsyi3/PcgE65S31IIJaylUAmkxmmRm2ByaCueI6ekaTFjSmbrOXeg0V8Om1G6QhEAp1x9wjf3PpA0UPSf9LsvnQ3nXd4M2EpgUwmt7QECvoVO7r+Pxu2PS/pHHRPmDN1wbKa0loJt7PXfZ6jrdrPtZHizTQbApa3hVyP9yTyvJFWI8ik4Rew4nT3pEHLkazddXiy4lsdhbfFuaylrKQq8LftKVffy+sRrJwfLdq9bp/uY3aBtJbtXSlKjZNaIF9vDRaskHf3p/npxyb+Hnk3QaaAmbWwpYxrwqUTq/+vvhx7+93nOy5oDfO1Jv9x32euqbFyUbWreeVI+O9dQ0ogk8WXp/lYeUGNa4VkLYcfvd53xDrxtXGLl3cnXK8bNHW+f3EN883SiNfHJDy/0z39w9AFX72wlj+MHr2p1fixUF+9Jlh1UXXBtTV7+jL8Yn9WCaSYlJka35sdYkXEYIapcbZP584GH89cVM29K6YR9rmHKf99Yx+rXCrkb17ro3vI3Xk9oy7Amqun8+3WIPW6QGckWiZgSUCnMnBqjTDf2RYnlnJ3jsv9Hr62tJrGMdbJn21qrF1cyZN/UE9w5NQ2j2D1pTUsbgkV/O9/vtXPYAnub3ZCW0LQ0Fi5rJaVxxK5kbBma4w/3+ye5ftqxuGbz3bxgxXTXNehN5Z7+cal9dyRc4gl80gJXlOjJmhwqkWCd+clj23s448XVGE5knzOoTdl0TWYY3tPlqc60jxdYO3JQp/GV+ZEuPzMKBGfjiPhL6f7EEJw2+JqGqKFw8XvdKW4d3eSUuSU6ioTWZuH3+jl9ncSY36VatX+LNrT+7hneV3BMHGZqVFmnvqRra9uT/DjnUMMOdDtSLJj9Oa6gJurTG46I8z5LaHDOhJNwN3L6wl5tTFnxlM5h++t7yFeortjTrhAXn4/QcSrUXkcPXMy5/DaBwnu39jP2mNYhffA/ixvr/mIb5xfwdK2UFHXmZ9sZCRsHyOPploTfLrC4IrmIAtOC9JY7nVd9x3xjT0LbzuSn77Ww6OxfMmW64QL5OZNA9S/NciNdV6WTvfTVuWjOmxQGfCgieFcIiHEyCZkw9v/246kO2nREcuyoSPF43tSrBtnfP3FtM1l63q4alM/nzs9xLyGAA1RL17PgTymke3P5JGpKqPlHDlSHjF6WbYk77LDSt6RHEtKVL7QtY5yB48GTdBkCKr8OueWG8yoMJlZ5aO50ktF0ChKuo0jYc1bw0t5x/8+zpjpQbbj/n8YTjWaSCZ882o3fJpglk9juqlR4REYYjjp8KOc5O20TXwCt3MJaIL5AZ0m7/BOh1lHkpfDKxgzI7+zzvDvrBxeN5+Ww+elJWRseVjFaqJwtONYtm/SReHkzKO51ucqTe5fMY2q4MT0f46EX23u46Y3+7HlxL7PWGVry4ldVHXCBKKYWK6LePjBJXW0VfmKet1kzuEnv+/mrneHpsTXidXm1SXKrwctrljbweotMVL548+wdSRs3Zfki7/Zy1emiDjUCDJF+GzU4NZ5Uc5vDh38KM/RYjmS3T0ZHt/az717Uq4b9SmBKE55lvp1Pt8aYEFjkJZqHxGvjqaJw3wERw5nKXzUn+XtzjRrdw/xcG8OZ4qWmRLIFGZ+QGdZxEONV0cISFsOmxI2L8QthhzVLEB9YWpKszFlszFlq4JQTrpCoQSiUCiBKBRKIAqFEohCoQSiUCiBKBRKIAqFEohCoVACUSiUQBQKJRCFQglEoVACUSiUQBQKJRCFQglEoZgK/B84Slw4FDDabwAAAABJRU5ErkJggg==" />
+                <p>
+                    @T("Plugins.Payments.Barion.Configure.Description")
+                </p>
+
+                <div class="form-group">
+                    <div class="col-md-3">
+                        <nop-override-store-checkbox asp-for="POSKey_OverrideForStore" asp-input="POSKey" asp-store-scope="@Model.ActiveStoreScopeConfiguration" />
+                        <nop-label asp-for="POSKey" />
+                    </div>
+                    <div class="col-md-9">
+                        <nop-editor asp-for="POSKey" />
+                        <span asp-validation-for="POSKey"></span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-3">
+                        <nop-override-store-checkbox asp-for="ApiUrl_OverrideForStore" asp-input="ApiUrl" asp-store-scope="@Model.ActiveStoreScopeConfiguration" />
+                        <nop-label asp-for="ApiUrl" />
+                    </div>
+                    <div class="col-md-9">
+                        <nop-editor asp-for="ApiUrl" />
+                        <span asp-validation-for="ApiUrl"></span>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-md-3">
+                        <nop-override-store-checkbox asp-for="RedirectUrl_OverrideForStore" asp-input="RedirectUrl" asp-store-scope="@Model.ActiveStoreScopeConfiguration" />
+
+                        <nop-label asp-for="RedirectUrl" />
+                    </div>
+                    <div class="col-md-9">
+                        <nop-editor asp-for="RedirectUrl" />
+                        <span asp-validation-for="RedirectUrl"></span>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-md-3">
+                        <nop-override-store-checkbox asp-for="CallbackUrl_OverrideForStore" asp-input="CallbackUrl" asp-store-scope="@Model.ActiveStoreScopeConfiguration" />
+                        <nop-label asp-for="CallbackUrl" />
+                    </div>
+                    <div class="col-md-9">
+                        <nop-editor asp-for="CallbackUrl" />
+                        <span asp-validation-for="CallbackUrl"></span>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-md-3">
+                        <nop-override-store-checkbox asp-for="BarionPayee_OverrideForStore" asp-input="BarionPayee" asp-store-scope="@Model.ActiveStoreScopeConfiguration" />
+                        <nop-label asp-for="BarionPayee" />
+                    </div>
+                    <div class="col-md-9">
+                        <nop-editor asp-for="BarionPayee" />
+                        <span asp-validation-for="BarionPayee"></span>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-md-3">
+                        <nop-override-store-checkbox asp-for="IsSandbox_OverrideForStore" asp-input="IsSandbox" asp-store-scope="@Model.ActiveStoreScopeConfiguration" />
+                        <nop-label asp-for="IsSandbox" />
+                    </div>
+                    <div class="col-md-9">
+                        <nop-editor asp-for="IsSandbox" />
+                        <span asp-validation-for="IsSandbox"></span>
+                    </div>
+                </div>
+
+
+                <div class="form-group">
+                    <div class="col-md-3">
+                        <nop-override-store-checkbox asp-for="LogTransaction_OverrideForStore" asp-input="LogTransaction" asp-store-scope="@Model.ActiveStoreScopeConfiguration" />
+
+                        <nop-label asp-for="LogTransaction" />
+                    </div>
+                    <div class="col-md-9">
+                        <nop-editor asp-for="LogTransaction" />
+                        <span asp-validation-for="LogTransaction"></span>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-md-3">
+                        <nop-override-store-checkbox asp-for="LogPaymentProcess_OverrideForStore" asp-input="LogPaymentProcess" asp-store-scope="@Model.ActiveStoreScopeConfiguration" />
+
+                        <nop-label asp-for="LogPaymentProcess" />
+                    </div>
+                    <div class="col-md-9">
+                        <nop-editor asp-for="LogPaymentProcess" />
+                        <span asp-validation-for="LogPaymentProcess"></span>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-md-3">
+                        <nop-override-store-checkbox asp-for="AdditionalFee_OverrideForStore" asp-input="AdditionalFee" asp-store-scope="@Model.ActiveStoreScopeConfiguration" />
+                        <nop-label asp-for="AdditionalFee" />
+                    </div>
+                    <div class="col-md-9">
+                        <nop-editor asp-for="AdditionalFee" />
+                        <span asp-validation-for="AdditionalFee"></span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-3">
+                        <nop-override-store-checkbox asp-for="AdditionalFeePercentage_OverrideForStore" asp-input="AdditionalFeePercentage" asp-store-scope="@Model.ActiveStoreScopeConfiguration" />
+                        <nop-label asp-for="AdditionalFeePercentage" />
+                    </div>
+                    <div class="col-md-9">
+                        <nop-editor asp-for="AdditionalFeePercentage" />
+                        <span asp-validation-for="AdditionalFeePercentage"></span>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-md-3">
+                        <nop-override-store-checkbox asp-for="UseReservationPaymentType_OverrideForStore" asp-input="UseReservationPaymentType" asp-store-scope="@Model.ActiveStoreScopeConfiguration" />
+
+                        <nop-label asp-for="UseReservationPaymentType" />
+                    </div>
+                    <div class="col-md-9">
+                        <nop-editor asp-for="UseReservationPaymentType" />
+                        <span asp-validation-for="UseReservationPaymentType"></span>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-md-3">
+                        <nop-override-store-checkbox asp-for="AllowedIpList_OverrideForStore" asp-input="AllowedIpList" asp-store-scope="@Model.ActiveStoreScopeConfiguration" />
+                        <nop-label asp-for="AllowedIpList" />
+                    </div>
+                    <div class="col-md-9">
+                        <nop-editor asp-for="AllowedIpList" />
+                        <span asp-validation-for="AllowedIpList"></span>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-md-9 col-md-offset-3">
+                        <input type="submit" name="save" class="btn btn-primary" value="@T("Plugins.Payments.Barion.Save")" />
+                    </div>
+                </div>
+            </div>
+        </div>
+     
+    </div>
+</form>

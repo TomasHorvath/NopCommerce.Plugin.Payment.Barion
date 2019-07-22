@@ -1,0 +1,123 @@
+﻿@model BarionPaymentSearchModel
+@{
+
+    //page title
+    ViewBag.Title = T("Admin.Catalog.Products").Text;
+    //active menu item (system name)
+    Html.SetActiveMenuItemSystemName("Barion.PaymentList");
+
+    Layout = "_AdminLayout";
+}
+
+
+<div class="content">
+    <div class="form-horizontal">
+        <div class="panel-group">
+
+            <div class="panel panel-default panel-search">
+                <div class="panel-body">
+
+
+                    <div class="search-body">
+                        <div class="row">
+                            <div class="col-md-7">
+                                <div class="form-group">
+                                    <div class="col-md-4">
+                                        <nop-label asp-for="SearchStoreId" />
+                                    </div>
+                                    <div class="col-md-8">
+                                        <nop-select asp-for="SearchStoreId" asp-items="Model.AvailableStores" />
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <div class="col-md-4">
+                                        <nop-label asp-for="SearchTransactionId" />
+                                    </div>
+                                    <div class="col-md-8">
+                                        <nop-editor asp-for="SearchTransactionId" />
+                                    </div>
+                                </div>
+
+
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-7 col-md-offset-5">
+                                <button type="button" id="search-transaction" class="btn btn-primary btn-search">
+                                    <i class="fa fa-search"></i>
+                                    @T("Admin.Common.Search")
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="panel panel-default">
+
+                <div class="panel-body">
+                    @await Html.PartialAsync("Table", new DataTablesModel
+               {
+                   Name = "transaction-grid",
+                   UrlRead = new DataUrl("TransactionList", "Barion", null),
+                   SearchButtonId = "search-transaction",
+                   Length = Model.PageSize,
+                   LengthMenu = Model.AvailablePageSizes,
+                   Filters = new List<FilterParameter>
+                                        {
+                                            new FilterParameter(nameof(Model.SearchStoreId)),
+                                            new FilterParameter(nameof(Model.SearchTransactionId))
+                                        },
+                   ColumnCollection = new List<ColumnProperty>
+                        {
+                            new ColumnProperty(nameof(BarionTransactionModel.Id))
+                            {
+                                IsMasterCheckBox = true,
+                                Render = new RenderCheckBox("checkbox_products"),
+                                ClassName =  NopColumnClassDefaults.CenterAll,
+                                Width = "50",
+                            },
+                            new ColumnProperty(nameof(BarionTransactionModel.OrderTotal))
+                            {
+                                Title = T("Admin.Catalog.Products.Fields.PictureThumbnailUrl").Text,
+                                Width = "100",
+
+                            },
+                            new ColumnProperty(nameof(BarionTransactionModel.PaymentId))
+                            {
+                                Title = T("Admin.Catalog.Products.Fields.Name").Text,
+                                Width = "300"
+                            },
+                            new ColumnProperty(nameof(BarionTransactionModel.PaymentStatus))
+                            {
+                                Title = T("Admin.Catalog.Products.Fields.Sku").Text,
+                                Width = "100"
+                            },
+                            new ColumnProperty(nameof(BarionTransactionModel.POSTransactionId))
+                            {
+                                Title = T("Admin.Catalog.Products.Fields.Price").Text,
+                                Width = "150",
+
+                            },
+                            new ColumnProperty(nameof(BarionTransactionModel.TransactionId))
+                            {
+                                Title = T("Admin.Catalog.Products.Fields.StockQuantity").Text,
+                                Width = "100"
+                            }
+                            ,
+                                            new ColumnProperty(nameof(BarionTransactionModel.OrderId))
+                                            {
+                                                Title = T("Admin.Common.Edit").Text,
+                                                 Width = "100",
+                                                ClassName =  NopColumnClassDefaults.Button,
+                                                Render = new RenderButtonView(new DataUrl("ShowOrder"))
+                                            }
+                        }
+               })
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
