@@ -1,0 +1,126 @@
+﻿@model AllowedIPSearchModel
+@{
+
+    //page title
+    ViewBag.Title = T("Admin.Barion.Payment.Title.AllowedIpList").Text;
+    //active menu item (system name)
+    Html.SetActiveMenuItemSystemName("Barion.AllowedIpList");
+
+    Layout = "_AdminLayout";
+}
+
+
+<div class="content">
+    <div class="form-horizontal">
+        <div class="panel-group">
+
+            <div class="panel panel-default">
+
+                <div class="panel-body">
+                    @await Html.PartialAsync("Table", new DataTablesModel
+               {
+                   Name = "alloweIpList-grid",
+                   UrlRead = new DataUrl("IpList", "Barion", null),
+                   UrlDelete = new DataUrl("IpDelete", "Barion", null),
+                   Length = Model.PageSize,
+                   LengthMenu = Model.AvailablePageSizes,
+                   Filters = null,
+                   ColumnCollection = new List<ColumnProperty>
+                        {
+                            new ColumnProperty(nameof(AllowedIPAddressModel.IpAddress))
+                            {
+
+                                Title = T("Barion.Config.AllowedIPAddressModel.Fields.IpAddress").Text,
+                                Width = "50",
+                            },
+                            new ColumnProperty(nameof(AllowedIPAddressModel.StoreName))
+                            {
+                                Title = T("Barion.Config.AllowedIPAddressModel.Fields.Store").Text,
+                                Width = "100",
+
+                            }
+                            ,
+                                            new ColumnProperty(nameof(AllowedIPAddressModel.Id))
+                                            {
+                                                Title = T("Admin.Common.Edit").Text,
+                                                Width = "100",
+                                                ClassName =  NopColumnClassDefaults.Button,
+                                                Render = new RenderButtonRemove(T("Admin.Common.Delete").Text)
+                                            }
+                        }
+               })
+                </div>
+            </div>
+
+        </div>
+
+
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                @T("Admin.Common.AddNewRecord")
+            </div>
+            <div class="panel-body">
+                <div class="form-group">
+                    <div class="col-md-3">
+                        <nop-label asp-for="@Model.AddIp.IpAddress" />
+                    </div>
+                    <div class="col-md-9">
+                        <nop-editor asp-for="@Model.AddIp.IpAddress" />
+                        <span asp-validation-for="@Model.AddIp.IpAddress"></span>
+                    </div>
+                </div>
+               
+                <div class="form-group">
+                    <div class="col-md-3">
+                        <nop-label asp-for="@Model.AddIp.StoreId" />
+                    </div>
+                    <div class="col-md-9">
+                        <nop-select asp-for="@Model.AddIp.StoreId" asp-items="@Model.AvailableStores" />
+                        <span asp-validation-for="@Model.AddIp.StoreId"></span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-9 col-md-offset-3">
+                        <button type="button" id="addIpAddress" class="btn btn-primary">@T("Admin.Common.AddNewRecord")</button>
+                    </div>
+                </div>
+            </div>
+            <script>
+                        $(document).ready(function () {
+                            $('#addIpAddress').click(function () {
+                                $('#addIpAddress').attr('disabled', true);
+                                var postData = {
+                                    IpAddress: $("#@Html.IdFor(model => model.AddIp.IpAddress)").val(),                              
+                                    StoreId: $("#@Html.IdFor(model => model.AddIp.StoreId)").val()
+                                };
+                                addAntiForgeryToken(postData);
+
+                                $.ajax({
+                                    cache: false,
+                                    type: "POST",
+                                    url: "@Html.Raw(Url.Action("IpAdd", "Barion", null))",
+                                    data: postData,
+                                    success: function (data, textStatus, jqXHR) {
+                                        if (data.Result) {
+                                            //reload grid
+                                            updateTable('#alloweIpList-grid');
+
+                                            //clear input value
+                                            $("#@Html.IdFor(model => model.AddIp.IpAddress)").val('');
+                                            $("#@Html.IdFor(model => model.AddIp.StoreId)").val('');
+                                           
+                                        } else {
+                                            //display errors if returned
+                                            display_nop_error(data);
+                                        }
+                                    },
+                                    complete: function (jqXHR, textStatus) {
+                                        $('#addIpAddress').attr('disabled', false);
+                                    }
+                                });
+                            });
+                        });
+            </script>
+        </div>
+    </div>
+</div>
