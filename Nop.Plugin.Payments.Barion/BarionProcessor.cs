@@ -37,7 +37,7 @@ namespace Nop.Plugin.Payments.Barion
 
         #endregion
 
-        #region Ctor
+        #region Ctor 
 
         public BarionProcessor(ISettingService settingService, ILocalizationService localizationService, ILogger logger, IBarionPaymentService barionPaymentService, BarionPaymentsContext dbBarionWrapper, IStoreContext storeContext, IWebHelper webHelper, IHttpContextAccessor httpContextAccessor, IPaymentService paymentService, ITransactionService transactionService)
         {
@@ -60,7 +60,7 @@ namespace Nop.Plugin.Payments.Barion
         /// <summary>
         /// Gets a value indicating whether to hide this plugin on the widget list page in the admin area
         /// </summary>
-        public bool HideInWidgetList => true;
+        public bool HideInWidgetList => false;
 
         /// <summary>
         /// Gets a view component for displaying plugin in public store ("payment info" checkout step)
@@ -130,7 +130,6 @@ namespace Nop.Plugin.Payments.Barion
             _localizationService.AddOrUpdatePluginLocaleResource("Barion.Admin.Menu.Help", "Nápověda", "cs-cz");
             _localizationService.AddOrUpdatePluginLocaleResource("Barion.Admin.Menu.AllowedIpList", "Seznam povolených adres", "cs-cz");
 
-
             _localizationService.AddOrUpdatePluginLocaleResource("Plugins.Payments.Barion.Fields.AllowedIpList", "Nápověda", "cs-cz");
             _localizationService.AddOrUpdatePluginLocaleResource("Plugins.Payments.Barion.Fields.AdditionalFeePercentage", "Nápověda", "cs-cz");
             _localizationService.AddOrUpdatePluginLocaleResource("Plugins.Payments.Barion.Fields.AdditionalFee", "Nápověda", "cs-cz");
@@ -145,8 +144,6 @@ namespace Nop.Plugin.Payments.Barion
             _localizationService.AddOrUpdatePluginLocaleResource("Plugins.Payments.Barion.Fields.POSKey", "Nápověda", "cs-cz");
             _localizationService.AddOrUpdatePluginLocaleResource("Barion.Admin.Menu.Configure", "Nastavení", "cs-cz");
 
-
-
             _localizationService.AddOrUpdatePluginLocaleResource("Plugins.Payments.Barion.Fields.AdditionalFeePercentage.Hint", "Dodatečné náklady v procentech", "cs-cz");
             _localizationService.AddOrUpdatePluginLocaleResource("Plugins.Payments.Barion.Fields.AdditionalFee.Hint", "Dodatečné náklady", "cs-cz");
             _localizationService.AddOrUpdatePluginLocaleResource("Plugins.Payments.Barion.Fields.UseReservationPaymentType.Hint", "Použít platby s možností rezervace prostředku.", "cs-cz");
@@ -158,6 +155,13 @@ namespace Nop.Plugin.Payments.Barion
             _localizationService.AddOrUpdatePluginLocaleResource("Plugins.Payments.Barion.Fields.BarionPayee.Hint", "Nápověda", "cs-cz");
             _localizationService.AddOrUpdatePluginLocaleResource("Plugins.Payments.Barion.Fields.ApiUrl.Hint", "Adresa  Barion API", "cs-cz");
             _localizationService.AddOrUpdatePluginLocaleResource("Plugins.Payments.Barion.Fields.POSKey.Hint", "Tajný klíč API obchodu, generovaný společností Barion.", "cs-cz");
+
+            _localizationService.AddOrUpdatePluginLocaleResource("Barion.Config.Fields.Barion.Config.Fields.CustomOrderNumber", "Objednávka", "cs-cz");
+            _localizationService.AddOrUpdatePluginLocaleResource("Barion.Config.Fields.OrderTotal", "Cena celkem", "cs-cz");
+            _localizationService.AddOrUpdatePluginLocaleResource("Barion.Config.Fields.PaymentId", "ID platby", "cs-cz");
+            _localizationService.AddOrUpdatePluginLocaleResource("Barion.Config.Fields.PaymentStatus", "Stav", "cs-cz");
+            _localizationService.AddOrUpdatePluginLocaleResource("Barion.Config.Fields.POSTransactionId", "POSTransactionId", "cs-cz");
+            _localizationService.AddOrUpdatePluginLocaleResource("Barion.Config.Fields.TransactionId", "TransactionId", "cs-cz");
 
             #endregion
         }       
@@ -328,6 +332,7 @@ namespace Nop.Plugin.Payments.Barion
                     var payment = new Domain.BarionTransaction()
                     {
                         OrderId = postProcessPaymentRequest.Order.Id,
+                        CustomOrderNumber = postProcessPaymentRequest.Order.CustomOrderNumber,
                         PaymentId = result.PaymentId.ToString(),
                         TransactionId = result.Transactions.FirstOrDefault().TransactionId.ToString(),
                         POSTransactionId = result.Transactions.FirstOrDefault().POSTransactionId,

@@ -11,7 +11,7 @@ namespace Nop.Plugin.Payments.Barion.Services
         void Insert(BarionTransaction barionTransaction);
         BarionTransaction GetLastTransactionByOrderId(int id);
         BarionTransaction GetTransactionByPaymentId(string paymentId);
-        IPagedList<Domain.BarionTransaction> SearchBarionTransaction(int storeId,string transactionId, int pageIndex, int pageSize );
+        IPagedList<Domain.BarionTransaction> SearchBarionTransaction(int storeId,string transactionId,string customOrderNumber, int pageIndex, int pageSize );
         void Update(BarionTransaction transaction);
     }
 }

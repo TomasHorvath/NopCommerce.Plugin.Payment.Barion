@@ -9,5 +9,7 @@ namespace Nop.Plugin.Payments.Barion.Factories
     {
         BarionPaymentSearchModel PrepareBarionPaymentSearchModel(BarionPaymentSearchModel searchModel);
         BarionPaymentListModel PrepareBarionPaymentListModel(BarionPaymentSearchModel searchModel);
+        BarionAllowedIpListModel PrepareBarionAllowedIpList(AllowedIPSearchModel searchModel);
+        AllowedIPSearchModel PrepareAllowedSearchModel(AllowedIPSearchModel searchModel);
     }
 }

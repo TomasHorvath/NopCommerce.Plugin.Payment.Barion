@@ -2,5 +2,14 @@
 
 @if (Model.IsPaid)
 {
-    @T("Barion.Component.PaymentStatus.Sucessful")
+    <div class="title">
+        <strong>@T("Barion.Component.PaymentStatus.Sucessful")</strong>
+    </div>
+    <br />
+}
+else
+{
+    @*<div class="title">
+        <strong>@T("Barion.Component.PaymentStatus.NotPaid")</strong>
+    </div>*@
 }

@@ -63,7 +63,6 @@ namespace Nop.Plugin.Payments.Barion
         /// </summary>
         public int ReservationPeriod { get; set; }
 
-        public string AllowedIpList { get;  set; }
 
         /// <summary>
         /// Mark order as completed when payment status changed to paid

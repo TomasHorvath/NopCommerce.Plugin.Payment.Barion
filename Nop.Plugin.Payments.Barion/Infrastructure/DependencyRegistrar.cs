@@ -26,6 +26,7 @@ namespace Nop.Plugin.Payments.Barion.Infrastructure
             builder.RegisterType<Services.BarionPaymentService>().As<Services.IBarionPaymentService>().InstancePerLifetimeScope();
             builder.RegisterType<Services.TransactionService>().As<Services.ITransactionService>().InstancePerLifetimeScope();
             builder.RegisterType<Factories.BarionModelFactory>().As<Factories.IBarionModelFactory>().InstancePerLifetimeScope();
+            builder.RegisterType<Services.AllowedIpService>().As<Services.IAllowedIpService>().InstancePerLifetimeScope();
 
             //data context
             builder.RegisterPluginDataContext<Data.BarionPaymentsContext>("nop_object_context_barion_payment");
@@ -34,6 +35,10 @@ namespace Nop.Plugin.Payments.Barion.Infrastructure
             builder.RegisterType<EfRepository<Domain.BarionTransaction>>().As<IRepository<Domain.BarionTransaction>>()
                 .WithParameter(ResolvedParameter.ForNamed<IDbContext>("nop_object_context_barion_payment"))
                 .InstancePerLifetimeScope();
+
+            builder.RegisterType<EfRepository<Domain.AllowedIPAddress>>().As<IRepository<Domain.AllowedIPAddress>>()
+              .WithParameter(ResolvedParameter.ForNamed<IDbContext>("nop_object_context_barion_payment"))
+              .InstancePerLifetimeScope();
         }
 
         /// <summary>

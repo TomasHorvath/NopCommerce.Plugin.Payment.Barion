@@ -42,12 +42,17 @@ namespace Nop.Plugin.Payments.Barion.Services
             _transactions.Insert(barionTransaction);
         }
 
-        public IPagedList<BarionTransaction> SearchBarionTransaction(int storeId,string transactionId, int pageIndex, int pageSize)
+        public IPagedList<BarionTransaction> SearchBarionTransaction(int storeId,string transactionId,string customOrderNumber, int pageIndex, int pageSize)
         {
             var query = _transactions.TableNoTracking;
 
             if (!string.IsNullOrEmpty(transactionId))
                 query = query.Where(e => e.TransactionId == transactionId);
+
+            if (!string.IsNullOrEmpty(customOrderNumber))
+            {
+                query = query.Where(e => e.CustomOrderNumber == customOrderNumber);
+            }
 
             if (storeId > 0)
                 query = query.Where(trans => trans.StoreId == storeId || trans.StoreId == 0);

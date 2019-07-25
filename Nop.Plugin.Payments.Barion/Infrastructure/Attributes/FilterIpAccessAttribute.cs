@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.AspNetCore.Mvc.Routing;
 using Nop.Core;
+using Nop.Plugin.Payments.Barion.Services;
 using Nop.Services.Configuration;
 using Nop.Services.Logging;
 
@@ -59,6 +60,7 @@ namespace Nop.Plugin.Payments.Barion.Infrastructure.Attributes
 
             private readonly bool _ignoreFilter;
             private readonly ISettingService _settingService;
+            private readonly Services.IAllowedIpService _allowedIps;
             private readonly IStoreContext _storeContext;
             private readonly IUrlHelperFactory _urlHelperFactory;
             private readonly ILogger _logger;
@@ -68,15 +70,15 @@ namespace Nop.Plugin.Payments.Barion.Infrastructure.Attributes
 
             #region Ctor
 
-            public FilterIpAccessFilter(bool ignoreFilter, ISettingService settingService, IStoreContext storeContext, IUrlHelperFactory urlHelperFactory, ILogger logger)
+            public FilterIpAccessFilter(bool ignoreFilter, ISettingService settingService, IAllowedIpService allowedIps, IStoreContext storeContext, IUrlHelperFactory urlHelperFactory, ILogger logger)
             {
                 _ignoreFilter = ignoreFilter;
                 _settingService = settingService;
+                _allowedIps = allowedIps;
                 _storeContext = storeContext;
                 _urlHelperFactory = urlHelperFactory;
                 _logger = logger;
             }
-
 
             #endregion
 
@@ -94,23 +96,25 @@ namespace Nop.Plugin.Payments.Barion.Infrastructure.Attributes
                 var currentStore = _storeContext.CurrentStore.Id;
                 var settings = _settingService.LoadSetting<BarionSettings>(currentStore);
 
-                var allowedIpListRaw = settings.AllowedIpList;
+                var allowedIpList = _allowedIps.GetAll(0, Int32.MaxValue, currentStore);
+
+                if (allowedIpList == null)
+                    return;
 
                 if (settings.IsSandbox || _ignoreFilter)
                     return;
 
-                if (string.IsNullOrEmpty(settings.AllowedIpList))
+                if (allowedIpList.Count == 0)
                     return;
 
-                var allowedIpList = settings.AllowedIpList.Split(';');
-
+              
                 var remoteIp = context.HttpContext.Connection.RemoteIpAddress;
            
                 var bytes = remoteIp.GetAddressBytes();
                 var badIp = true;
                 foreach (var address in allowedIpList)
                 {
-                    var testIp = IPAddress.Parse(address);
+                    var testIp = IPAddress.Parse(address.IpAddress);
                     if (testIp.GetAddressBytes().SequenceEqual(bytes))
                     {
                         badIp = false;

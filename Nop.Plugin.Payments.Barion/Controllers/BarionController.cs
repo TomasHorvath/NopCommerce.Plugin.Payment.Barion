@@ -4,15 +4,18 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Nop.Core;
 using Nop.Plugin.Payments.Barion.Factories;
 using Nop.Plugin.Payments.Barion.Models;
+using Nop.Plugin.Payments.Barion.Services;
 using Nop.Services;
 using Nop.Services.Configuration;
 using Nop.Services.Localization;
+using Nop.Services.Logging;
 using Nop.Services.Messages;
 using Nop.Services.Security;
 using Nop.Web.Areas.Admin.Controllers;
 using Nop.Web.Areas.Admin.Infrastructure.Mapper.Extensions;
 using Nop.Web.Framework;
 using Nop.Web.Framework.Controllers;
+using Nop.Web.Framework.Mvc;
 using Nop.Web.Framework.Mvc.Filters;
 
 namespace Nop.Plugin.Payments.Barion.Controllers
@@ -29,12 +32,14 @@ namespace Nop.Plugin.Payments.Barion.Controllers
         private readonly ISettingService _settingService;
         private readonly IStoreContext _storeContext;
         private readonly Factories.IBarionModelFactory _barionModelFactory;
+        private readonly Services.IAllowedIpService _allowedIpService;
+        private readonly ICustomerActivityService _customerActivityService;
 
         #endregion
 
         #region Ctor
 
-        public BarionController(ILocalizationService localizationService, INotificationService notificationService, IPermissionService permissionService, ISettingService settingService, IStoreContext storeContext, IBarionModelFactory barionModelFactory)
+        public BarionController(ILocalizationService localizationService, INotificationService notificationService, IPermissionService permissionService, ISettingService settingService, IStoreContext storeContext, IBarionModelFactory barionModelFactory, IAllowedIpService allowedIpService, ICustomerActivityService customerActivityService)
         {
             _localizationService = localizationService;
             _notificationService = notificationService;
@@ -42,6 +47,8 @@ namespace Nop.Plugin.Payments.Barion.Controllers
             _settingService = settingService;
             _storeContext = storeContext;
             _barionModelFactory = barionModelFactory;
+            _allowedIpService = allowedIpService;
+            _customerActivityService = customerActivityService;
         }
 
         #endregion
@@ -59,7 +66,6 @@ namespace Nop.Plugin.Payments.Barion.Controllers
 
             //prepare model
             ConfigurationModel model = settings.ToModel<Models.ConfigurationModel>();
-            
 
             if (storeId > 0)
             {
@@ -73,13 +79,11 @@ namespace Nop.Plugin.Payments.Barion.Controllers
                 model.LogTransaction_OverrideForStore = _settingService.SettingExists(settings, x => x.LogTransaction, storeId);
                 model.POSKey_OverrideForStore = _settingService.SettingExists(settings, x => x.POSKey, storeId);
                 model.RedirectUrl_OverrideForStore = _settingService.SettingExists(settings, x => x.RedirectUrl, storeId);
-                model.AllowedIpList_OverrideForStore = _settingService.SettingExists(settings, x => x.AllowedIpList, storeId);
                 model.UseReservationPaymentType_OverrideForStore = _settingService.SettingExists(settings, x => x.UseReservationPaymentType, storeId);
-            }
+                model.ReservationPeriod_OverrideForStore = _settingService.SettingExists(settings, x => x.ReservationPeriod, storeId);
+                model.MarkOrderCompletedAfterPaid_OverrideForStore = _settingService.SettingExists(settings, x => x.MarkOrderCompletedAfterPaid, storeId);
 
-            //prepare payment transaction types
-            //model.PaymentTransactionTypes = TransactionType.Authorization.ToSelectList(false)
-            //    .Select(item => new SelectListItem(item.Text, item.Value)).ToList();
+            }
 
             return View("~/Plugins/Payments.Barion/Views/Configure.cshtml", model);
         }
@@ -113,7 +117,8 @@ namespace Nop.Plugin.Payments.Barion.Controllers
             _settingService.SaveSettingOverridablePerStore(settings, x => x.POSKey, model.POSKey_OverrideForStore, storeId, false);
             _settingService.SaveSettingOverridablePerStore(settings, x => x.RedirectUrl, model.RedirectUrl_OverrideForStore, storeId, false);
             _settingService.SaveSettingOverridablePerStore(settings, x => x.UseReservationPaymentType, model.UseReservationPaymentType_OverrideForStore, storeId, false);
-            _settingService.SaveSettingOverridablePerStore(settings, x => x.AllowedIpList, model.AllowedIpList_OverrideForStore, storeId, false);
+            _settingService.SaveSettingOverridablePerStore(settings, x => x.ReservationPeriod, model.ReservationPeriod_OverrideForStore, storeId, false);
+            _settingService.SaveSettingOverridablePerStore(settings, x => x.MarkOrderCompletedAfterPaid, model.MarkOrderCompletedAfterPaid_OverrideForStore, storeId, false);
 
             _settingService.ClearCache();
 
@@ -139,12 +144,47 @@ namespace Nop.Plugin.Payments.Barion.Controllers
         {
             if (!_permissionService.Authorize(StandardPermissionProvider.ManageOrders))
                 return AccessDeniedView();
+            
+            var model = _barionModelFactory.PrepareAllowedSearchModel(new AllowedIPSearchModel());
+            
+            return View("~/Plugins/Payments.Barion/Views/AllowedIpList.cshtml",model);
+        }
+
+        
+        [HttpPost]
+        public virtual IActionResult IpAdd(AddAllowedIPAddressModel model)
+        {
+            _allowedIpService.AddIpAddress(model);
+            return Json(new { Result = true });
+        }
+
+        [HttpPost]
+        public virtual IActionResult IpDelete(int id)
+        {
+
+            Domain.AllowedIPAddress ipAddress = _allowedIpService.GetById(id);
+
+            _allowedIpService.DeleteIpAddress(ipAddress);
+
+            //activity log
+            _customerActivityService.InsertActivity("DeleteSetting", string.Format(_localizationService.GetResource("ActivityLog.DeleteSetting"), ipAddress.IpAddress),null);
+
+            return new NullJsonResult();
+        }
+        
+
+        [HttpPost]
+        public virtual IActionResult IpList(AllowedIPSearchModel searchModel)
+        {
+            if (!_permissionService.Authorize(StandardPermissionProvider.ManageOrders))
+                return AccessDeniedDataTablesJson();
 
             //prepare model
-            var model = _barionModelFactory.PrepareBarionPaymentSearchModel(new BarionPaymentSearchModel());
+            BarionAllowedIpListModel model = _barionModelFactory.PrepareBarionAllowedIpList(searchModel);
 
-            return View("~/Plugins/Payments.Barion/Views/List.cshtml", model);
+            return Json(model);
         }
+
 
         [HttpPost]
         public virtual IActionResult TransactionList(BarionPaymentSearchModel searchModel)
@@ -158,6 +198,11 @@ namespace Nop.Plugin.Payments.Barion.Controllers
             return Json(model);
         }
 
+       
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public IActionResult Help()
         {
             return View("~/Plugins/Payments.Barion/Views/Help.cshtml");

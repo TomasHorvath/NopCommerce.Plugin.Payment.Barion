@@ -55,9 +55,13 @@ namespace Nop.Plugin.Payments.Barion.Models
         [NopResourceDisplayName("Plugins.Payments.Barion.Fields.UseReservationPaymentType")]
         public bool UseReservationPaymentType { get; set; }
         public bool UseReservationPaymentType_OverrideForStore { get; set; }
-        [NopResourceDisplayName("Plugins.Payments.Barion.Fields.AllowedIpList")]
-        public string AllowedIpList { get; set; }
-        public bool AllowedIpList_OverrideForStore { get; set; }
+
+        public int ReservationPeriod { get; set; }
+        public bool ReservationPeriod_OverrideForStore { get; set; }
+
+        public bool MarkOrderCompletedAfterPaid { get; set; }
+        public bool MarkOrderCompletedAfterPaid_OverrideForStore { get; set; }
+
 
     }
 }

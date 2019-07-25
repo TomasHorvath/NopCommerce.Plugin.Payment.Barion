@@ -36,6 +36,10 @@ namespace Nop.Plugin.Payments.Barion.Infrastructure.Mappings.Automapper
 
             CreateMap<Domain.BarionTransaction, Models.BarionTransactionModel>()
                .ReverseMap();
+
+            CreateMap<Domain.AllowedIPAddress, Models.AllowedIPAddressModel>()
+              .ForMember(e => e.StoreName, option => option.Ignore())
+              .ReverseMap();
         }
 
 

@@ -8,6 +8,7 @@ namespace Nop.Plugin.Payments.Barion.Domain
     public class BarionTransaction : BaseEntity
     {
         public int OrderId { get; set; }
+        public string CustomOrderNumber { get; set; }
         public string PaymentId { get; set; }
         public string TransactionId { get; set; }
         public string POSTransactionId { get; set; }

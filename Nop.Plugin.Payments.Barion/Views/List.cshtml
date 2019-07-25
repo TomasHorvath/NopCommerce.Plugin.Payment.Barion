@@ -2,7 +2,7 @@
 @{
 
     //page title
-    ViewBag.Title = T("Admin.Catalog.Products").Text;
+    ViewBag.Title = T("Admin.Barion.Payment.Title.TransactionList").Text;
     //active menu item (system name)
     Html.SetActiveMenuItemSystemName("Barion.PaymentList");
 
@@ -39,6 +39,14 @@
                                     </div>
                                 </div>
 
+                                <div class="form-group">
+                                    <div class="col-md-4">
+                                        <nop-label asp-for="CustomOrderNumber" />
+                                    </div>
+                                    <div class="col-md-8">
+                                        <nop-editor asp-for="CustomOrderNumber" />
+                                    </div>
+                                </div>
 
                             </div>
                         </div>
@@ -67,49 +75,48 @@
                    Filters = new List<FilterParameter>
                                         {
                                             new FilterParameter(nameof(Model.SearchStoreId)),
-                                            new FilterParameter(nameof(Model.SearchTransactionId))
+                                            new FilterParameter(nameof(Model.SearchTransactionId)),
+                                            new FilterParameter(nameof(Model.CustomOrderNumber))
                                         },
                    ColumnCollection = new List<ColumnProperty>
                         {
-                            new ColumnProperty(nameof(BarionTransactionModel.Id))
+                            new ColumnProperty(nameof(BarionTransactionModel.CustomOrderNumber))
                             {
-                                IsMasterCheckBox = true,
-                                Render = new RenderCheckBox("checkbox_products"),
-                                ClassName =  NopColumnClassDefaults.CenterAll,
+                                Title = T("Barion.Config.Fields.CustomOrderNumber").Text,
                                 Width = "50",
                             },
                             new ColumnProperty(nameof(BarionTransactionModel.OrderTotal))
                             {
-                                Title = T("Admin.Catalog.Products.Fields.PictureThumbnailUrl").Text,
+                                Title = T("Barion.Config.Fields.OrderTotal").Text,
                                 Width = "100",
 
                             },
                             new ColumnProperty(nameof(BarionTransactionModel.PaymentId))
                             {
-                                Title = T("Admin.Catalog.Products.Fields.Name").Text,
+                                Title = T("Barion.Config.Fields.PaymentId").Text,
                                 Width = "300"
                             },
                             new ColumnProperty(nameof(BarionTransactionModel.PaymentStatus))
                             {
-                                Title = T("Admin.Catalog.Products.Fields.Sku").Text,
+                                Title = T("Barion.Config.Fields.PaymentStatus").Text,
                                 Width = "100"
                             },
                             new ColumnProperty(nameof(BarionTransactionModel.POSTransactionId))
                             {
-                                Title = T("Admin.Catalog.Products.Fields.Price").Text,
+                                Title = T("Barion.Config.Fields.POSTransactionId").Text,
                                 Width = "150",
 
                             },
                             new ColumnProperty(nameof(BarionTransactionModel.TransactionId))
                             {
-                                Title = T("Admin.Catalog.Products.Fields.StockQuantity").Text,
+                                Title = T("Barion.Config.Fields.TransactionId").Text,
                                 Width = "100"
                             }
                             ,
                                             new ColumnProperty(nameof(BarionTransactionModel.OrderId))
                                             {
                                                 Title = T("Admin.Common.Edit").Text,
-                                                 Width = "100",
+                                                Width = "100",
                                                 ClassName =  NopColumnClassDefaults.Button,
                                                 Render = new RenderButtonView(new DataUrl("ShowOrder"))
                                             }

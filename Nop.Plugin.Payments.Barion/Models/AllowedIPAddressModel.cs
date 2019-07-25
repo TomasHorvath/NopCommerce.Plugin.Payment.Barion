@@ -9,6 +9,7 @@ namespace Nop.Plugin.Payments.Barion.Models
     {
         public int StoreId { get; set; }
         public string IpAddress { get; set; }
+        public string StoreName { get; set; }
 
     }
 }

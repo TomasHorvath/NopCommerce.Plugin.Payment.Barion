@@ -34,13 +34,15 @@ namespace Nop.Plugin.Payments.Barion.Components
 
         #region Ctor
 
-        public BarionPaymenStatusViewComponent(ILocalizationService localizationService, ILogger logger, ISettingService settingService, IOrderService orderService, IBarionPaymentService barionApi)
+        public BarionPaymenStatusViewComponent(ILocalizationService localizationService, ILogger logger, ISettingService settingService, IOrderService orderService, ITransactionService transactions, IBarionPaymentService barionApi, IStoreContext storeContext)
         {
             _localizationService = localizationService;
             _logger = logger;
             _settingService = settingService;
             _orderService = orderService;
+            _transactions = transactions;
             _barionApi = barionApi;
+            _storeContext = storeContext;
         }
 
         #endregion
