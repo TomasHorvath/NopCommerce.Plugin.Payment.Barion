@@ -51,11 +51,17 @@ namespace Nop.Plugin.Payments.Barion.Controllers
         [FilterIpAccess]
         public IActionResult PaymentCallback(string paymentId)
         {
-            _logger.Information($"PaymentCallback {paymentId}");
-
             if (string.IsNullOrEmpty(paymentId))
                 return NotFound();
 
+
+            var currentStoreSettings = _settingService.LoadSetting<BarionSettings>(_storeContext.ActiveStoreScopeConfiguration);
+            var transactionSettings = _barionPaymentService.GetBarionClientSettings(currentStoreSettings);
+
+            if(currentStoreSettings.LogPaymentProcess)
+                _logger.Information($"PaymentCallback was called with paymentId parameter : {paymentId}");
+
+          
             var transaction = _transactionService.GetTransactionByPaymentId(paymentId);
 
             if (transaction == null)
@@ -66,9 +72,7 @@ namespace Nop.Plugin.Payments.Barion.Controllers
             if (order == null)
                 return NotFound();
 
-            var currentStoreSettings = _settingService.LoadSetting<BarionSettings>(_storeContext.ActiveStoreScopeConfiguration);
-            var transactionSettings = _barionPaymentService.GetBarionClientSettings(currentStoreSettings);
-
+        
             GetPaymentStateOperationResult paymentState = _barionPaymentService.GetPaymentState(transactionSettings, transaction);
 
             if (!paymentState.IsOperationSuccessful)
@@ -127,7 +131,15 @@ namespace Nop.Plugin.Payments.Barion.Controllers
         [HttpGet]
         public IActionResult RedirectUrl(string paymentId)
         {
-            _logger.Information($"redirect {paymentId}");
+
+            if (string.IsNullOrEmpty(paymentId))
+                return NotFound();
+
+            var currentStoreSettings = _settingService.LoadSetting<BarionSettings>(_storeContext.ActiveStoreScopeConfiguration);
+            var transactionSettings = _barionPaymentService.GetBarionClientSettings(currentStoreSettings);
+
+            if (currentStoreSettings.LogPaymentProcess)
+                _logger.Information($"Redirect was called with paymentId parameter : {paymentId}");
 
             var transaction = _transactionService.GetTransactionByPaymentId(paymentId);
 

@@ -56,9 +56,11 @@ namespace Nop.Plugin.Payments.Barion.Models
         public bool UseReservationPaymentType { get; set; }
         public bool UseReservationPaymentType_OverrideForStore { get; set; }
 
+        [NopResourceDisplayName("Plugins.Payments.Barion.Fields.ReservationPeriod")]
         public int ReservationPeriod { get; set; }
         public bool ReservationPeriod_OverrideForStore { get; set; }
 
+        [NopResourceDisplayName("Plugins.Payments.Barion.Fields.MarkOrderCompletedAfterPaid")]
         public bool MarkOrderCompletedAfterPaid { get; set; }
         public bool MarkOrderCompletedAfterPaid_OverrideForStore { get; set; }
 

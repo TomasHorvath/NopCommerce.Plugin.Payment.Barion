@@ -167,7 +167,7 @@ namespace Nop.Plugin.Payments.Barion.Controllers
             _allowedIpService.DeleteIpAddress(ipAddress);
 
             //activity log
-            _customerActivityService.InsertActivity("DeleteSetting", string.Format(_localizationService.GetResource("ActivityLog.DeleteSetting"), ipAddress.IpAddress),null);
+            _customerActivityService.InsertActivity("DeleteSetting", string.Format(_localizationService.GetResource("Barion.ActivityLog.DeleteAllowedIP"), ipAddress.IpAddress),null);
 
             return new NullJsonResult();
         }

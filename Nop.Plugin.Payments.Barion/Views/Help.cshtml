@@ -3,9 +3,13 @@
     ViewBag.Title = T("Admin.Barion.Payment.Title.Help").Text;
     //active menu item (system name)
     Html.SetActiveMenuItemSystemName("Barion.Help");
-    
+
     Layout = "_AdminLayout";
 }
-
-
-@T("Barion.Payment.Description.Help")
+<div class="panel-group">
+    <div class="panel panel-default">
+        <div class="panel-body">
+            @T("Barion.Payment.Description.Help")
+        </div>
+    </div>
+</div>

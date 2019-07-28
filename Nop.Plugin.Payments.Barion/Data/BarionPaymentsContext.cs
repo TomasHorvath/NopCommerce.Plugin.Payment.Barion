@@ -127,6 +127,8 @@ namespace Nop.Plugin.Payments.Barion.Data
         {
             //drop the table
             this.DropPluginTable(nameof(Domain.BarionTransaction));
+            this.DropPluginTable(nameof(Domain.AllowedIPAddress));
+
         }
 
         #endregion
