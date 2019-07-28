@@ -123,11 +123,15 @@ namespace Nop.Plugin.Payments.Barion
         {
             #region En
 
-            _localizationService.AddOrUpdatePluginLocaleResource("Barion.Admin.Plugins.Saved", "Nastavení pluginu bylo uloženo");
+            _localizationService.AddOrUpdatePluginLocaleResource("Barion.Admin.Plugins.Saved", "Saved");
             _localizationService.AddOrUpdatePluginLocaleResource("Barion.Admin.Menu.Title", "Barion payments");
             _localizationService.AddOrUpdatePluginLocaleResource("Barion.Admin.Menu.PaymentList", "Transaction list");
             _localizationService.AddOrUpdatePluginLocaleResource("Barion.Admin.Menu.Help", "Help");
             _localizationService.AddOrUpdatePluginLocaleResource("Barion.Admin.Menu.AllowedIpList", "Allowed IP list");
+
+            _localizationService.AddOrUpdatePluginLocaleResource("barion.shipping.name", "Shipping");
+            _localizationService.AddOrUpdatePluginLocaleResource("barion.order.comment", "Order");
+
 
             _localizationService.AddOrUpdatePluginLocaleResource("Plugins.Payments.Barion.Fields.AllowedIpList", "Allowed IP list");
             _localizationService.AddOrUpdatePluginLocaleResource("Plugins.Payments.Barion.Fields.AdditionalFeePercentage", "Additional Fee Percentage");
@@ -178,6 +182,9 @@ namespace Nop.Plugin.Payments.Barion
 
             // CZECH
             #region Czech
+
+            _localizationService.AddOrUpdatePluginLocaleResource("barion.shipping.name", "Doprava");
+            _localizationService.AddOrUpdatePluginLocaleResource("barion.order.comment", "Objednávka");
 
             _localizationService.AddOrUpdatePluginLocaleResource("Barion.Admin.Plugins.Saved", "Nastavení pluginu bylo uloženo", "cs-CZ");
             _localizationService.AddOrUpdatePluginLocaleResource("Barion.Admin.Menu.Title", "Barion Platby", "cs-CZ");
